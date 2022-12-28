@@ -1,5 +1,4 @@
 import React from 'react'
-import './pai.css'
 
 export type PaiDetail = {
     type: string;
