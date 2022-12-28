@@ -13,18 +13,20 @@ type AnswerProps = {
 }
 
 export const Answer: React.FC<AnswerProps> = props => {
+    const hasCorrect = () => {
+        for (const correctAnswer of props.detail.correctAnswer) {
+            const correct = isCorrect(props.detail.userAnswer, correctAnswer);
+
+            if (correct) return true
+        }
+
+        return false
+    }
+
     const isCorrect = (userAnswer: PaiDetail, correctAnswer: PaiDetail) => {
         return userAnswer.type === correctAnswer.type &&
             userAnswer.index === correctAnswer.index &&
             userAnswer.isBonus === correctAnswer.isBonus
-    }
-
-    let correct = false
-    for (const correctAnswer of props.detail.correctAnswer) {
-        correct = isCorrect(props.detail.userAnswer, correctAnswer)
-        if (correct) {
-            break
-        }
     }
 
     const correctAnswers = props.detail.correctAnswer.map((fc, idx) => {
@@ -35,7 +37,7 @@ export const Answer: React.FC<AnswerProps> = props => {
 
     return (
         <>
-            <div>{correct ? "○" : "×"}</div>
+            <div>{hasCorrect() ? "○" : "×"}</div>
             <div>あなたの回答: <Pai detail={props.detail.userAnswer} /></div>
             <div>正解: {correctAnswers}</div>
         </>
