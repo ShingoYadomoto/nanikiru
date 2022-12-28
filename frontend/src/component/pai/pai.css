@@ -1,8 +1,8 @@
-.pai {
+.hand > .pai {
   cursor: pointer;
 }
 
-.pai:hover {
+.hand > .pai:hover {
   position:relative;
   top: -20px;
 }
