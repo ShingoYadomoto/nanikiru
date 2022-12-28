@@ -1,5 +1,6 @@
 import React from 'react'
 import {Pai, PaiDetail} from '../pai/pai';
+import './hand.css'
 
 type State = {
     paiList: PaiDetail[];
@@ -38,9 +39,9 @@ class Hand extends React.Component<{}, State> {
         });
 
         return (
-            <>
+            <div className={"hand"}>
                 {pais}
-            </>
+            </div>
         );
     }
 }
