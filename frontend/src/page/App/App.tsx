@@ -1,10 +1,8 @@
-import React, { useState } from 'react'
+import React  from 'react'
 import Hand from '../../component/hand/hand'
 import './App.css'
 
 const App: React.FC = () => {
-  const [count, setCount] = useState(1)
-
   return (
       <div className="App">
         <header className="App-header">
