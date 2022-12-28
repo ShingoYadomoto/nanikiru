@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/ShingoYadomoto/nanikiru/app/data"
+	"github.com/ShingoYadomoto/nanikiru/backend/data"
 )
 
 func main() {
