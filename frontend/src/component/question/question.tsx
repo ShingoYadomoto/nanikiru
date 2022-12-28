@@ -1,11 +1,13 @@
 import React from 'react'
 import {Hand, HandDetail} from '../hand/hand'
 import {Answer, AnswerDetail} from '../answer/answer'
+import {NextButton, NextButtonDetail} from "../nextButton/nextButton";
 import {PaiDetail} from "../pai/pai";
 
 type QuestionState = {
     hand: HandDetail;
     answer: AnswerDetail;
+    button: NextButtonDetail;
 }
 
 class Question extends React.Component<{}, QuestionState> {
@@ -42,9 +44,14 @@ class Question extends React.Component<{}, QuestionState> {
         }
         // Samples //
 
+        const button: NextButtonDetail = {
+            isActive: true,
+        }
+
         this.state = {
             hand: hand,
             answer: incorrect,
+            button: button,
         };
     }
 
@@ -53,6 +60,7 @@ class Question extends React.Component<{}, QuestionState> {
             <>
                 <Hand detail={this.state.hand}/>
                 <Answer detail={this.state.answer}/>
+                <NextButton detail={this.state.button}/>
             </>
         );
     }
