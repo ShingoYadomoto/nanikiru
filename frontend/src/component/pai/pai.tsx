@@ -1,4 +1,5 @@
 import React from 'react'
+import './pai.css'
 
 export type PaiDetail = {
     type: string;
@@ -38,6 +39,6 @@ export const Pai: React.FC<PaiProps> = props => {
     }
 
     return (
-        <img src={getPaiImgPath(props)} alt="牌"></img>
+        <img className={"pai"} src={getPaiImgPath(props)} alt="牌"></img>
     );
 }
