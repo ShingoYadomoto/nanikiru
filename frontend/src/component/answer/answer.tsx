@@ -1,7 +1,6 @@
 import React from 'react'
 import {Pai, PaiDetail} from '../pai/pai';
 import './answer.css'
-import {isBooleanObject} from "util/types";
 
 export type AnswerDetail = {
     userAnswer: PaiDetail;
