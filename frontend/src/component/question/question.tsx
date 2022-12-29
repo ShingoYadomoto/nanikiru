@@ -42,7 +42,7 @@ class Question extends React.Component<{}, QuestionState> {
 
         return (
             <>
-                <Hand detail={this.state.hand}/>
+                <Hand detail={this.state.hand} onPaiSelected={selected => this.handleAnswer(this.state.questionID, selected)}/>
                 {answer}
                 <NextButton detail={this.state.button}/>
             </>

@@ -16,6 +16,7 @@ export type PaiDetail = {
 
 export type PaiProps = {
     detail: PaiDetail
+    onPaiSelected: (selected: PaiDetail) => void;
 }
 
 export const Pai: React.FC<PaiProps> = props => {
@@ -44,7 +45,11 @@ export const Pai: React.FC<PaiProps> = props => {
         return `${process.env.PUBLIC_URL}/img/pai/${getPaiImgTypeDir(pai)}/${getPaiImgDirectionDir(pai)}/${getPaiImgFileName(pai)}`;
     }
 
+    const onPaiSelected = () => {
+        props.onPaiSelected(props.detail);
+    }
+
     return (
-        <img className={"pai"} src={getPaiImgPath(props)} alt="牌"></img>
+        <img className={"pai"} src={getPaiImgPath(props)} alt="牌" onClick={e => onPaiSelected()}></img>
     );
 }

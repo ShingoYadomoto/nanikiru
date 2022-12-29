@@ -9,12 +9,13 @@ export type HandDetail = {
 
 type HandProps = {
     detail: HandDetail
+    onPaiSelected: (selected: PaiDetail) => void;
 }
 
 export const Hand: React.FC<HandProps> = props => {
     const pais = props.detail.paiList.map((fc, idx) => {
         return (
-            <Pai detail={fc} />
+            <Pai detail={fc} onPaiSelected={selected => props.onPaiSelected(selected)}/>
         );
     });
 

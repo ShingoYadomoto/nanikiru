@@ -15,14 +15,14 @@ type AnswerProps = {
 export const Answer: React.FC<AnswerProps> = props => {
     const correctAnswers = props.detail.correctAnswer.map((fc, idx) => {
         return (
-            <Pai detail={fc} />
+            <Pai detail={fc} onPaiSelected={selected => {}}/>
         );
     });
 
     return (
         <>
             <div>{props.detail.isCorrect ? "○" : "×"}</div>
-            <div>あなたの回答: <Pai detail={props.detail.userAnswer} /></div>
+            <div>あなたの回答: <Pai detail={props.detail.userAnswer} onPaiSelected={selected => {}}/></div>
             <div>正解: {correctAnswers}</div>
         </>
     );
