@@ -12,6 +12,7 @@ export interface IQuestionData {
     id: QuestionID,
     paiList: PaiDetail[],
     situation: string,
+    page: number,
 }
 
 export interface IAnswerRequest {

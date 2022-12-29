@@ -11,6 +11,54 @@ import (
 
 const excludeIDQueryKey = "exclude_id"
 
+type QuestionPai struct {
+	Type    string `json:"type"`
+	Index   uint8  `json:"index"`
+	IsFolou bool   `json:"isFolou"`
+	IsBonus bool   `json:"isBonus"`
+}
+
+type QuestionSchema struct {
+	ID        data.QuestionID `json:"id"`
+	PaiList   []QuestionPai   `json:"paiList"`
+	Situation string          `json:"situation"`
+	Page      uint            `json:"page"`
+}
+
+func convert(q *data.Question) (*QuestionSchema, error) {
+	parsedPaiList, err := q.Hands.Parse()
+	if err != nil {
+		return nil, err
+	}
+
+	paiList := make([]QuestionPai, len(parsedPaiList))
+	for i, parsedPai := range parsedPaiList {
+
+		t, err := parsedPai.Type.ToString()
+		if err != nil {
+			return nil, err
+		}
+
+		idx, err := parsedPai.Index.ToUint8()
+		if err != nil {
+			return nil, err
+		}
+
+		paiList[i] = QuestionPai{
+			Type:    t,
+			Index:   idx,
+			IsFolou: parsedPai.IsFolou,
+			IsBonus: parsedPai.IsBonus,
+		}
+	}
+
+	return &QuestionSchema{
+		ID:      q.ID,
+		PaiList: paiList,
+		Page:    q.Page,
+	}, nil
+}
+
 func getRandomQuestionHandler(rw http.ResponseWriter, r *http.Request) {
 	ret, err := func() ([]byte, error) {
 		var (
@@ -33,12 +81,17 @@ func getRandomQuestionHandler(rw http.ResponseWriter, r *http.Request) {
 			excludeIDList = append(excludeIDList, id)
 		}
 
-		d, err := data.GetQuestioner().GetQuestion(excludeIDList)
+		question, err := data.GetQuestioner().GetQuestion(excludeIDList)
 		if err != nil {
 			return nil, err
 		}
 
-		j, err := json.Marshal(d)
+		convertedQuestion, err := convert(question)
+		if err != nil {
+			return nil, err
+		}
+
+		j, err := json.Marshal(convertedQuestion)
 		if err != nil {
 			return nil, err
 		}

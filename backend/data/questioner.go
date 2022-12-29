@@ -3,31 +3,19 @@ package data
 import (
 	"errors"
 	"math/rand"
-	"strconv"
 	"time"
 
 	_ "github.com/mattn/go-sqlite3"
 )
 
-type QuestionID uint
-
-func NewQuestionIDFromStr(s string) (QuestionID, error) {
-	i, err := strconv.Atoi(s)
-	if err != nil {
-		return 0, err
-	}
-
-	return QuestionID(i), nil
-}
-
 type Questioner struct {
-	data map[QuestionID]Nanikiru
+	data map[QuestionID]Question
 }
 
 func newQuestioner() *Questioner {
 	dl := newData()
 
-	m := map[QuestionID]Nanikiru{}
+	m := map[QuestionID]Question{}
 	for i, d := range dl {
 		m[QuestionID(i+1)] = d
 	}
@@ -45,14 +33,7 @@ func GetQuestioner() *Questioner {
 	return nanikiruQuestioner
 }
 
-type Nanikiru struct {
-	ID     uint
-	Hands  string
-	Answer string
-	Page   int
-}
-
-func (q *Questioner) GetQuestion(excludeIDList []QuestionID) (*Nanikiru, error) {
+func (q *Questioner) GetQuestion(excludeIDList []QuestionID) (*Question, error) {
 	var (
 		max          = len(q.data)
 		maxfailCount = max - len(excludeIDList)

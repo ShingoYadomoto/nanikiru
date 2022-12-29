@@ -1,7 +1,31 @@
 package data
 
-func newData() []Nanikiru {
-	return []Nanikiru{
+import (
+	"strconv"
+)
+
+type (
+	QuestionID uint
+
+	Question struct {
+		ID     QuestionID
+		Hands  Hand
+		Answer string
+		Page   uint
+	}
+)
+
+func NewQuestionIDFromStr(s string) (QuestionID, error) {
+	i, err := strconv.Atoi(s)
+	if err != nil {
+		return 0, err
+	}
+
+	return QuestionID(i), nil
+}
+
+func newData() []Question {
+	return []Question{
 		{Hands: "56m5689p44667s中中中", Answer: "8p", Page: 9},
 		{Hands: "45m2344779p23367s", Answer: "4p", Page: 10},
 		{Hands: "45*78m1111234467s", Answer: "7m(8m)", Page: 11},

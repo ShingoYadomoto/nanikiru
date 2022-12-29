@@ -1,58 +1,97 @@
 package data
 
-type (
-	pai interface {
-		// ToDo
+import (
+	"fmt"
+	"strconv"
+)
+
+type PaiType string
+
+const (
+	PaiTypeManzu PaiType = "m"
+	PaiTypePinzu PaiType = "p"
+	PaiTypeSozu  PaiType = "s"
+	PaiTypeZi    PaiType = "z"
+)
+
+func (pt PaiType) ToString() (string, error) {
+	if pt != PaiTypeManzu &&
+		pt != PaiTypePinzu &&
+		pt != PaiTypeSozu &&
+		pt != PaiTypeZi {
+		return "", fmt.Errorf("unexpected pai type: %s", pt)
 	}
 
-	manzu string
-	pinzu string
-	sozu  string
-	zi    string
-)
+	return string(pt), nil
+}
+
+type PaiIndex string
 
 const (
-	一萬 manzu = "1m"
-	二萬 manzu = "2m"
-	三萬 manzu = "3m"
-	四萬 manzu = "4m"
-	五萬 manzu = "5m"
-	六萬 manzu = "6m"
-	七萬 manzu = "7m"
-	八萬 manzu = "8m"
-	九萬 manzu = "9m"
+	PaiIndex1 PaiIndex = "1"
+	PaiIndex2 PaiIndex = "2"
+	PaiIndex3 PaiIndex = "3"
+	PaiIndex4 PaiIndex = "4"
+	PaiIndex5 PaiIndex = "5"
+	PaiIndex6 PaiIndex = "6"
+	PaiIndex7 PaiIndex = "7"
+	PaiIndex8 PaiIndex = "8"
+	PaiIndex9 PaiIndex = "9"
 )
 
-const (
-	一筒 pinzu = "1p"
-	二筒 pinzu = "2p"
-	三筒 pinzu = "3p"
-	四筒 pinzu = "4p"
-	五筒 pinzu = "5p"
-	六筒 pinzu = "6p"
-	七筒 pinzu = "7p"
-	八筒 pinzu = "8p"
-	九筒 pinzu = "9p"
-)
+func (pi PaiIndex) ToUint8() (uint8, error) {
+	i, err := strconv.Atoi(string(pi))
+	if err != nil {
+		return 0, err
+	}
 
-const (
-	一索 sozu = "1s"
-	二索 sozu = "2s"
-	三索 sozu = "3s"
-	四索 sozu = "4s"
-	五索 sozu = "5s"
-	六索 sozu = "6s"
-	七索 sozu = "7s"
-	八索 sozu = "8s"
-	九索 sozu = "9s"
-)
+	return uint8(i), nil
+}
 
-const (
-	東 zi = "東"
-	南 zi = "南"
-	西 zi = "西"
-	北 zi = "北"
-	白 zi = "白"
-	發 zi = "發"
-	中 zi = "中"
-)
+var zihai2Index = map[string]PaiIndex{
+	"東": PaiIndex1,
+	"西": PaiIndex2,
+	"南": PaiIndex3,
+	"北": PaiIndex4,
+	"白": PaiIndex5,
+	"發": PaiIndex6,
+	"中": PaiIndex7,
+}
+
+type Pai struct {
+	Type    PaiType
+	Index   PaiIndex
+	IsFolou bool
+	IsBonus bool
+}
+
+func NewPai(s string, t PaiType, isFolou, isBonus bool) (*Pai, error) {
+	if idx, isZi := zihai2Index[s]; isZi {
+		if t != PaiTypeZi {
+			return nil, fmt.Errorf("unexpected pai type. got: %s, want: %s", t, PaiTypeZi)
+		}
+
+		return &Pai{
+			Type:    PaiTypeZi,
+			Index:   idx,
+			IsFolou: isFolou,
+			IsBonus: isBonus,
+		}, nil
+	}
+
+	idxInt, err := strconv.Atoi(s)
+	if err != nil {
+		return nil, err
+	}
+
+	if idxInt < 1 || 9 < idxInt {
+		return nil, fmt.Errorf("unexpected index: %s", s)
+	}
+
+	return &Pai{
+		Type:    t,
+		Index:   PaiIndex(s),
+		IsFolou: isFolou,
+		IsBonus: isBonus,
+	}, nil
+}
