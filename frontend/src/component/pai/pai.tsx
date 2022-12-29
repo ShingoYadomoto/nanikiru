@@ -1,7 +1,14 @@
 import React from 'react'
 
+export enum PaiType {
+    Manzu = "m",
+    Pinzu = "p",
+    Sozu  = "s",
+    Zi    = "z",
+}
+
 export type PaiDetail = {
-    type: string;
+    type: PaiType;
     index: number;
     isFolou: boolean;
     isBonus: boolean;
