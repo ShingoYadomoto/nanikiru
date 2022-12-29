@@ -7,12 +7,17 @@ export type NextButtonDetail = {
 
 type NextButtonProps = {
     detail: NextButtonDetail
+    onClickNextButton: () => void;
 }
 
 export const NextButton: React.FC<NextButtonProps> = props => {
+    const onClick = () => {
+        props.onClickNextButton();
+    }
+
     return (
-        <button className={"nextButton " + (props.detail.isActive ? "nextButton-active" : "")}>
-            次の問題へ
+        <button className={"nextButton " + (props.detail.isActive ? "nextButton-active" : "")} onClick={e => onClick()}>
+            {"次の問題へ" + (props.detail.isActive ? "" : " 押せないよ")}
         </button>
     );
 }

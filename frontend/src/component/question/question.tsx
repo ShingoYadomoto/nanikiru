@@ -8,6 +8,7 @@ import {PaiDetail} from "../pai/pai";
 export type QuestionID = number
 
 type QuestionState = {
+    excludeID: QuestionID[]
     questionID: QuestionID;
     hand: HandDetail;
     answer?: AnswerDetail;
@@ -25,6 +26,7 @@ class Question extends React.Component<{}, QuestionState> {
         }
 
         this.state = {
+            excludeID: excludeID,
             questionID: question[1],
             hand: question[0],
             button: button,
@@ -35,6 +37,22 @@ class Question extends React.Component<{}, QuestionState> {
         const answer = Questioner.answer(id, selected);
 
         this.setState({ answer: answer });
+        this.setState({ button: {isActive: true} });
+    }
+
+    handleNextQuestion() {
+        const excludeID = this.state.excludeID
+        excludeID.push(this.state.questionID)
+
+        const nextQuestion: [HandDetail, QuestionID] = Questioner.getNextQuestion(excludeID)
+        const button: NextButtonDetail = {
+            isActive: false,
+        }
+
+        this.setState({ excludeID: excludeID });
+        this.setState({ answer: undefined });
+        this.setState({ hand: nextQuestion[0] });
+        this.setState({ button: button });
     }
 
     render() {
@@ -44,7 +62,7 @@ class Question extends React.Component<{}, QuestionState> {
             <>
                 <Hand detail={this.state.hand} onPaiSelected={selected => this.handleAnswer(this.state.questionID, selected)}/>
                 {answer}
-                <NextButton detail={this.state.button}/>
+                <NextButton detail={this.state.button} onClickNextButton={this.handleNextQuestion}/>
             </>
         );
     }
