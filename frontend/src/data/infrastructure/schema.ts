@@ -1,4 +1,5 @@
 import {PaiType} from "../../component/pai/pai";
+import {QuestionID} from "../../component/question/question";
 
 type PaiDetail = {
     type: PaiType;
@@ -8,6 +9,7 @@ type PaiDetail = {
 }
 
 export interface IQuestionData {
+    id: QuestionID,
     paiList: PaiDetail[],
     situation: string,
 }
