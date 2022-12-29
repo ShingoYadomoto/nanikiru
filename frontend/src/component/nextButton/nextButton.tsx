@@ -1,5 +1,6 @@
 import React from 'react'
 import './nextButton.css'
+import {QuestionID} from "../question/question";
 
 export type NextButtonDetail = {
     isActive: boolean;

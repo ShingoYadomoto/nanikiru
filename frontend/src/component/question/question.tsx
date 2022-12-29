@@ -46,7 +46,7 @@ class Question extends React.Component<{}, QuestionState> {
 
         const nextQuestion: [HandDetail, QuestionID] = Questioner.getNextQuestion(excludeID)
         const button: NextButtonDetail = {
-            isActive: false,
+            isActive: true,
         }
 
         this.setState({ excludeID: excludeID });
@@ -62,7 +62,7 @@ class Question extends React.Component<{}, QuestionState> {
             <>
                 <Hand detail={this.state.hand} onPaiSelected={selected => this.handleAnswer(this.state.questionID, selected)}/>
                 {answer}
-                <NextButton detail={this.state.button} onClickNextButton={this.handleNextQuestion}/>
+                <NextButton detail={this.state.button} onClickNextButton={() => this.handleNextQuestion()}/>
             </>
         );
     }
