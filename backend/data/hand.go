@@ -37,8 +37,8 @@ func (h Hand) reversePaiList(pl []Pai) []Pai {
 
 func (h Hand) Parse() ([]Pai, error) {
 	var (
-		ret                                    = make([]Pai, 0, paiCount)
-		currentPaiType                 PaiType = PaiTypeZi
+		ret                            = make([]Pai, 0, paiCount)
+		currentPaiType                 = PaiTypeZi
 		currentIsBonus, currentIsFolou bool
 	)
 	for _, r := range h.reverseHandStr() {
@@ -52,12 +52,15 @@ func (h Hand) Parse() ([]Pai, error) {
 		case HandPaiTypeType:
 			currentPaiType = PaiType(s)
 		case HandPaiTypePai:
-			p, err := NewPai(s, currentPaiType, currentIsBonus, currentIsFolou)
+			p, err := NewPai(s, currentPaiType, currentIsFolou, currentIsBonus)
 			if err != nil {
 				return nil, err
 			}
 
 			ret = append(ret, *p)
+
+			currentIsBonus = false
+			currentIsFolou = false
 		default:
 			return nil, fmt.Errorf("unexpected pai: %s", s)
 		}
@@ -71,7 +74,7 @@ func (h Hand) checkHandType(s string) HandPaiType {
 		return HandPaiTypeBonus
 	}
 	if s == folouFlag {
-		return HandPaiTypeBonus
+		return HandPaiTypeFolou
 	}
 
 	if s == string(PaiTypeManzu) ||

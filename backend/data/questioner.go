@@ -17,7 +17,10 @@ func newQuestioner() *Questioner {
 
 	m := map[QuestionID]Question{}
 	for i, d := range dl {
-		m[QuestionID(i+1)] = d
+		id := QuestionID(i + 1)
+		d.ID = id
+
+		m[id] = d
 	}
 	return &Questioner{data: m}
 }
@@ -49,7 +52,7 @@ func (q *Questioner) GetQuestion(excludeIDList []QuestionID) (*Question, error) 
 			return nil, errors.New("over max fail count")
 		}
 
-		randomID := QuestionID(rand.Intn(max + 1))
+		randomID := QuestionID(rand.Intn(max)) + 1
 		if _, ng := excludeIDMap[randomID]; ng {
 			maxfailCount--
 			continue

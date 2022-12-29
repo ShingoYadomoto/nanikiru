@@ -36,7 +36,7 @@ func newData() []Question {
 		{Hands: "234677m388p23478s", Answer: "7m(3p)", Page: 22},
 		{Hands: "234677m388p23468s", Answer: "7m", Page: 23},
 		{Hands: "788m11379p1389s中中", Answer: "8m", Page: 25},
-		{Hands: "788m99p1378s發發 中中中", Answer: "3s", Page: 25},
+		{Hands: "788m99p1378s發發中中_中", Answer: "3s", Page: 25},
 		{Hands: "12367m24p789p22s88s", Answer: "2p", Page: 31},
 	}
 }
