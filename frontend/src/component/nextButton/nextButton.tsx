@@ -1,6 +1,5 @@
 import React from 'react'
 import './nextButton.css'
-import {QuestionID} from "../question/question";
 
 export type NextButtonDetail = {
     isActive: boolean;
@@ -13,7 +12,9 @@ type NextButtonProps = {
 
 export const NextButton: React.FC<NextButtonProps> = props => {
     const onClick = () => {
-        props.onClickNextButton();
+        if (props.detail.isActive) {
+            props.onClickNextButton();
+        }
     }
 
     return (
