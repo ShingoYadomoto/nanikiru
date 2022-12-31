@@ -1,6 +1,7 @@
 package data
 
 import (
+	"fmt"
 	"strings"
 )
 
@@ -15,7 +16,7 @@ func (ans Answer) Parse() ([]Pai, error) {
 	for i, paiStr := range paiStrList {
 		p, err := NewAnswerPai(paiStr)
 		if err != nil {
-			return nil, err
+			return nil, fmt.Errorf("failed to NewAnswerPai(). %s", err)
 		}
 
 		ret[i] = *p

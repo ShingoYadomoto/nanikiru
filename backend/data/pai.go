@@ -108,15 +108,6 @@ func NewAnswerPai(s string) (*Pai, error) {
 		}, nil
 	}
 
-	idxInt, err := strconv.Atoi(s)
-	if err != nil {
-		return nil, err
-	}
-
-	if idxInt < 1 || 9 < idxInt {
-		return nil, errors.New("unexpected index")
-	}
-
 	var paiType PaiType
 	for _, t := range []PaiType{PaiTypeManzu, PaiTypePinzu, PaiTypeSozu} {
 		if strings.HasSuffix(s, string(t)) {
@@ -127,9 +118,18 @@ func NewAnswerPai(s string) (*Pai, error) {
 		return nil, errors.New("unexpected type")
 	}
 
+	idxInt, err := strconv.Atoi(strings.TrimRight(s, string(paiType)))
+	if err != nil {
+		return nil, fmt.Errorf("failed to str to num. %s", err)
+	}
+
+	if idxInt < 1 || 9 < idxInt {
+		return nil, errors.New("unexpected index")
+	}
+
 	return &Pai{
 		Type:  paiType,
-		Index: PaiIndex(s),
+		Index: PaiIndex(fmt.Sprint(idxInt)),
 	}, nil
 }
 

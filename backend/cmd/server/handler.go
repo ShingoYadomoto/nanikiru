@@ -26,11 +26,11 @@ type (
 	}
 
 	AnswerRequest struct {
-		Answer QuestionPai `json:"answer"`
+		UserAnswer QuestionPai `json:"userAnswer"`
 	}
 	AnswerResponse struct {
-		IsCorrect bool          `json:"isCorrect"`
-		Answer    []QuestionPai `json:"answer"`
+		IsCorrect     bool          `json:"isCorrect"`
+		CorrectAnswer []QuestionPai `json:"correctAnswer"`
 	}
 )
 
@@ -68,13 +68,13 @@ func (h Handler) response(rw http.ResponseWriter, f func() ([]byte, error)) {
 	}
 }
 
-func (h Handler) convertPaiList(pl []data.Pai) []QuestionPai {
+func (h Handler) convertPaiList(pl []data.Pai) ([]QuestionPai, error) {
 	paiList := make([]QuestionPai, len(pl))
 	for i, parsedPai := range pl {
 
 		idx, err := parsedPai.Index.ToUint8()
 		if err != nil {
-			return nil
+			return nil, err
 		}
 
 		paiList[i] = QuestionPai{
@@ -85,7 +85,7 @@ func (h Handler) convertPaiList(pl []data.Pai) []QuestionPai {
 		}
 	}
 
-	return paiList
+	return paiList, nil
 }
 
 const excludeIDQueryKey = "exclude_id"
@@ -122,9 +122,14 @@ func (h Handler) GetRandomQuestionHandler(rw http.ResponseWriter, r *http.Reques
 			return nil, err
 		}
 
+		paiList, err := h.convertPaiList(parsedPaiList)
+		if err != nil {
+			return nil, err
+		}
+
 		j, err := json.Marshal(QuestionResponse{
 			ID:      question.ID,
-			PaiList: h.convertPaiList(parsedPaiList),
+			PaiList: paiList,
 			Page:    question.Page,
 		})
 		if err != nil {
@@ -148,7 +153,7 @@ func (h Handler) PostAnswerHandler(rw http.ResponseWriter, r *http.Request) {
 			return nil, err
 		}
 
-		userAnswerPai, err := data.NewPai(request.Answer.Type, request.Answer.Index, request.Answer.IsFolou, request.Answer.IsBonus)
+		userAnswerPai, err := data.NewPai(request.UserAnswer.Type, request.UserAnswer.Index, request.UserAnswer.IsFolou, request.UserAnswer.IsBonus)
 		if err != nil {
 			return nil, err
 		}
@@ -171,9 +176,14 @@ func (h Handler) PostAnswerHandler(rw http.ResponseWriter, r *http.Request) {
 			}
 		}
 
+		answer, err := h.convertPaiList(parsedPaiList)
+		if err != nil {
+			return nil, err
+		}
+
 		j, err := json.Marshal(AnswerResponse{
-			IsCorrect: isCorrect,
-			Answer:    h.convertPaiList(parsedPaiList),
+			IsCorrect:     isCorrect,
+			CorrectAnswer: answer,
 		})
 		if err != nil {
 			return nil, err

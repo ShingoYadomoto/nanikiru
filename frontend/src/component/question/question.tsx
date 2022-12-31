@@ -43,10 +43,6 @@ class Question extends React.Component<{}, QuestionState> {
     nextQuestion() {
         data.getQuestion(this.state.excludeID)
             .then((response) => {
-                const hand: HandDetail = {
-                    paiList: response.data.paiList
-                }
-
                 const excludeID = this.state.excludeID
                 excludeID.push(response.data.id)
 
@@ -54,7 +50,9 @@ class Question extends React.Component<{}, QuestionState> {
                     excludeID: excludeID,
                     questionID: response.data.id,
                     answer: undefined,
-                    hand: hand,
+                    hand: {
+                        paiList: response.data.paiList
+                    },
                     button: {isActive: false},
                 });
             })
@@ -70,32 +68,16 @@ class Question extends React.Component<{}, QuestionState> {
 
         data.postAnswer(id, body)
             .then((response) => {
-                const answer: AnswerDetail = {
-                    isCorrect: response.data.isCorrect,
-                    userAnswer: selected,
-                    correctAnswer: response.data.correctAnswer,
-                }
-
                 this.setState({
-                    answer: answer,
+                    answer: {
+                        isCorrect: response.data.isCorrect,
+                        userAnswer: selected,
+                        correctAnswer: response.data.correctAnswer,
+                    },
                     button: {isActive: true},
                 });
             })
             .catch((e: Error) => {
-                // ToDO: remove mock data
-
-                this.setState({
-                    answer: {
-                        isCorrect: false,
-                        userAnswer: selected,
-                        correctAnswer: [
-                            {type: PaiType.Pinzu, index: 8, isFolou: false, isBonus: false,},
-                            {type: PaiType.Pinzu, index: 9, isFolou: false, isBonus: false,},
-                        ],
-                    },
-                    button: {isActive: true},
-                });
-
                 console.log(e);
             });
     }
