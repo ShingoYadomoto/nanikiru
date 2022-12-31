@@ -1,8 +1,8 @@
 import React from 'react'
 import {Hand, HandDetail} from '../hand/hand'
 import {Answer, AnswerDetail} from '../answer/answer'
-import {NextButton, NextButtonDetail} from "../nextButton/nextButton";
-import {PaiDetail, PaiType} from "../pai/pai";
+import {NextButton} from "../nextButton/nextButton";
+import {PaiDetail} from "../pai/pai";
 import data from "../../data/infrastructure/data";
 import {IAnswerRequest} from "../../data/infrastructure/schema";
 
@@ -13,16 +13,11 @@ type QuestionState = {
     questionID: QuestionID;
     hand: HandDetail;
     answer?: AnswerDetail;
-    button: NextButtonDetail;
 }
 
 class Question extends React.Component<{}, QuestionState> {
     constructor(props: {}) {
         super(props);
-
-        const button: NextButtonDetail = {
-            isActive: false,
-        }
 
         const hand: HandDetail = {
             paiList: [],
@@ -32,7 +27,6 @@ class Question extends React.Component<{}, QuestionState> {
             excludeID: [],
             questionID: 0,
             hand: hand,
-            button: button,
         };
     }
 
@@ -53,7 +47,6 @@ class Question extends React.Component<{}, QuestionState> {
                     hand: {
                         paiList: response.data.paiList
                     },
-                    button: {isActive: false},
                 });
             })
             .catch((e: Error) => {
@@ -74,7 +67,6 @@ class Question extends React.Component<{}, QuestionState> {
                         userAnswer: selected,
                         correctAnswer: response.data.correctAnswer,
                     },
-                    button: {isActive: true},
                 });
             })
             .catch((e: Error) => {
@@ -84,12 +76,13 @@ class Question extends React.Component<{}, QuestionState> {
 
     render() {
         const answer = this.state.answer == undefined ? <></> : <Answer detail={this.state.answer}/>
+        const button = this.state.answer == undefined ? <></> : <NextButton onClickNextButton={() => this.nextQuestion()}/>
 
         return (
             <>
                 <Hand detail={this.state.hand} onPaiSelected={selected => this.handleAnswer(this.state.questionID, selected)}/>
                 {answer}
-                <NextButton detail={this.state.button} onClickNextButton={() => this.nextQuestion()}/>
+                {button}
             </>
         );
     }
