@@ -52,7 +52,7 @@ func (h Hand) Parse() ([]Pai, error) {
 		case HandPaiTypeType:
 			currentPaiType = PaiType(s)
 		case HandPaiTypePai:
-			p, err := NewPai(s, currentPaiType, currentIsFolou, currentIsBonus)
+			p, err := NewHandPai(s, currentPaiType, currentIsFolou, currentIsBonus)
 			if err != nil {
 				return nil, err
 			}

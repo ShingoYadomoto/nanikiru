@@ -36,7 +36,7 @@ func GetQuestioner() *Questioner {
 	return nanikiruQuestioner
 }
 
-func (q *Questioner) GetQuestion(excludeIDList []QuestionID) (*Question, error) {
+func (q *Questioner) GetRandomQuestion(excludeIDList []QuestionID) (*Question, error) {
 	var (
 		max          = len(q.data)
 		maxfailCount = max - len(excludeIDList)
@@ -62,4 +62,14 @@ func (q *Questioner) GetQuestion(excludeIDList []QuestionID) (*Question, error) 
 
 		return &ret, nil
 	}
+}
+
+var ErrNotFound = errors.New("err: Not Found")
+
+func (q *Questioner) GetQuestion(id QuestionID) (*Question, error) {
+	if d, ok := q.data[id]; ok {
+		return &d, nil
+	}
+
+	return nil, ErrNotFound
 }

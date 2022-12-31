@@ -1,8 +1,10 @@
 package data
 
 import (
+	"errors"
 	"fmt"
 	"strconv"
+	"strings"
 )
 
 type PaiType string
@@ -13,17 +15,6 @@ const (
 	PaiTypeSozu  PaiType = "s"
 	PaiTypeZi    PaiType = "z"
 )
-
-func (pt PaiType) ToString() (string, error) {
-	if pt != PaiTypeManzu &&
-		pt != PaiTypePinzu &&
-		pt != PaiTypeSozu &&
-		pt != PaiTypeZi {
-		return "", fmt.Errorf("unexpected pai type: %s", pt)
-	}
-
-	return string(pt), nil
-}
 
 type PaiIndex string
 
@@ -65,7 +56,20 @@ type Pai struct {
 	IsBonus bool
 }
 
-func NewPai(s string, t PaiType, isFolou, isBonus bool) (*Pai, error) {
+func NewPai(t PaiType, idx uint8, isFolou, isBonus bool) (*Pai, error) {
+	if idx < 1 || 9 < idx {
+		return nil, errors.New("unexpected index")
+	}
+
+	return &Pai{
+		Type:    t,
+		Index:   PaiIndex(fmt.Sprint(idx)),
+		IsFolou: isFolou,
+		IsBonus: isBonus,
+	}, nil
+}
+
+func NewHandPai(s string, t PaiType, isFolou, isBonus bool) (*Pai, error) {
 	if idx, isZi := zihai2Index[s]; isZi {
 		if t != PaiTypeZi {
 			return nil, fmt.Errorf("unexpected pai type. got: %s, want: %s", t, PaiTypeZi)
@@ -94,4 +98,48 @@ func NewPai(s string, t PaiType, isFolou, isBonus bool) (*Pai, error) {
 		IsFolou: isFolou,
 		IsBonus: isBonus,
 	}, nil
+}
+
+func NewAnswerPai(s string) (*Pai, error) {
+	if idx, isZi := zihai2Index[s]; isZi {
+		return &Pai{
+			Type:  PaiTypeZi,
+			Index: idx,
+		}, nil
+	}
+
+	idxInt, err := strconv.Atoi(s)
+	if err != nil {
+		return nil, err
+	}
+
+	if idxInt < 1 || 9 < idxInt {
+		return nil, errors.New("unexpected index")
+	}
+
+	var paiType PaiType
+	for _, t := range []PaiType{PaiTypeManzu, PaiTypePinzu, PaiTypeSozu} {
+		if strings.HasSuffix(s, string(t)) {
+			paiType = t
+		}
+	}
+	if paiType == "" {
+		return nil, errors.New("unexpected type")
+	}
+
+	return &Pai{
+		Type:  paiType,
+		Index: PaiIndex(s),
+	}, nil
+}
+
+func (p *Pai) Equal(compare *Pai) bool {
+	if p.Type == compare.Type &&
+		p.Index == compare.Index &&
+		p.IsFolou == compare.IsFolou &&
+		p.IsBonus == compare.IsBonus {
+		return true
+	}
+
+	return false
 }
