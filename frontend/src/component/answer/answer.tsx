@@ -22,7 +22,7 @@ export const Answer: React.FC<AnswerProps> = props => {
     return (
         <>
             <span>{props.detail.isCorrect ? "○" : "×"}</span>
-            <span>あなたの回答: <Pai detail={props.detail.userAnswer} onPaiSelected={selected => {}}/></span>
+            <span>回答: <Pai detail={props.detail.userAnswer} onPaiSelected={selected => {}}/></span>
             <span>正解: {correctAnswers}</span>
         </>
     );

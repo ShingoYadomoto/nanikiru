@@ -5,6 +5,7 @@ import {NextButton} from "../nextButton/nextButton";
 import {PaiDetail} from "../pai/pai";
 import data from "../../data/infrastructure/data";
 import {IAnswerRequest} from "../../data/infrastructure/schema";
+import './question.css'
 
 export type QuestionID = number
 
@@ -30,7 +31,7 @@ class Question extends React.Component<{}, QuestionState> {
         };
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.nextQuestion()
     }
 
@@ -80,9 +81,13 @@ class Question extends React.Component<{}, QuestionState> {
 
         return (
             <>
-                <Hand detail={this.state.hand} onPaiSelected={selected => this.handleAnswer(this.state.questionID, selected)}/>
-                {answer}
-                {button}
+                <div className="hand-container">
+                    <Hand detail={this.state.hand} onPaiSelected={selected => this.handleAnswer(this.state.questionID, selected)}/>
+                </div>
+                <div>
+                    {answer}
+                    {button}
+                </div>
             </>
         );
     }
