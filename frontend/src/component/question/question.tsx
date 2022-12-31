@@ -2,8 +2,9 @@ import React from 'react'
 import {Hand, HandDetail} from '../hand/hand'
 import {Answer, AnswerDetail} from '../answer/answer'
 import {NextButton, NextButtonDetail} from "../nextButton/nextButton";
-import Questioner from "../../data/questioner/questioner";
-import {PaiDetail} from "../pai/pai";
+import {PaiDetail, PaiType} from "../pai/pai";
+import data from "../../data/infrastructure/data";
+import {IAnswerRequest} from "../../data/infrastructure/schema";
 
 export type QuestionID = number
 
@@ -19,40 +20,84 @@ class Question extends React.Component<{}, QuestionState> {
     constructor(props: {}) {
         super(props);
 
-        const excludeID: QuestionID[] = []
-        const question: [HandDetail, QuestionID] = Questioner.getNextQuestion(excludeID)
         const button: NextButtonDetail = {
             isActive: false,
         }
 
+        const hand: HandDetail = {
+            paiList: [],
+        }
+
         this.state = {
-            excludeID: excludeID,
-            questionID: question[1],
-            hand: question[0],
+            excludeID: [],
+            questionID: 0,
+            hand: hand,
             button: button,
         };
     }
 
-    handleAnswer(id: QuestionID, selected: PaiDetail) {
-        const answer = Questioner.answer(id, selected);
-
-        this.setState({ answer: answer });
-        this.setState({ button: {isActive: true} });
+    componentWillMount() {
+        this.nextQuestion()
     }
 
-    handleNextQuestion() {
-        const excludeID = this.state.excludeID
-        excludeID.push(this.state.questionID)
+    nextQuestion() {
+        data.getQuestion(this.state.excludeID)
+            .then((response) => {
+                const hand: HandDetail = {
+                    paiList: response.data.paiList
+                }
 
-        const nextQuestion: [HandDetail, QuestionID] = Questioner.getNextQuestion(excludeID)
-        const button: NextButtonDetail = {
-            isActive: true,
+                const excludeID = this.state.excludeID
+                excludeID.push(response.data.id)
+
+                this.setState({
+                    excludeID: excludeID,
+                    questionID: response.data.id,
+                    answer: undefined,
+                    hand: hand,
+                    button: {isActive: false},
+                });
+            })
+            .catch((e: Error) => {
+                console.log(e);
+            });
+    }
+
+    handleAnswer(id: QuestionID, selected: PaiDetail) {
+        const body: IAnswerRequest = {
+            userAnswer: selected,
         }
 
-        this.setState({ excludeID: excludeID });
-        this.setState({ answer: undefined });
-        this.setState({ hand: nextQuestion[0] });
-        this.setState({ button: button });
+        data.postAnswer(id, body)
+            .then((response) => {
+                const answer: AnswerDetail = {
+                    isCorrect: response.data.isCorrect,
+                    userAnswer: selected,
+                    correctAnswer: response.data.correctAnswer,
+                }
+
+                this.setState({
+                    answer: answer,
+                    button: {isActive: true},
+                });
+            })
+            .catch((e: Error) => {
+                // ToDO: remove mock data
+
+                this.setState({
+                    answer: {
+                        isCorrect: false,
+                        userAnswer: selected,
+                        correctAnswer: [
+                            {type: PaiType.Pinzu, index: 8, isFolou: false, isBonus: false,},
+                            {type: PaiType.Pinzu, index: 9, isFolou: false, isBonus: false,},
+                        ],
+                    },
+                    button: {isActive: true},
+                });
+
+                console.log(e);
+            });
     }
 
     render() {
@@ -62,7 +107,7 @@ class Question extends React.Component<{}, QuestionState> {
             <>
                 <Hand detail={this.state.hand} onPaiSelected={selected => this.handleAnswer(this.state.questionID, selected)}/>
                 {answer}
-                <NextButton detail={this.state.button} onClickNextButton={() => this.handleNextQuestion()}/>
+                <NextButton detail={this.state.button} onClickNextButton={() => this.nextQuestion()}/>
             </>
         );
     }

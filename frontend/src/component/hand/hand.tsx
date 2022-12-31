@@ -15,7 +15,7 @@ type HandProps = {
 export const Hand: React.FC<HandProps> = props => {
     const pais = props.detail.paiList.map((fc, idx) => {
         return (
-            <Pai detail={fc} onPaiSelected={selected => props.onPaiSelected(selected)}/>
+            <Pai key={idx} detail={fc} onPaiSelected={selected => props.onPaiSelected(selected)}/>
         );
     });
 
