@@ -60,7 +60,7 @@ class Question extends React.Component<{}, QuestionState> {
             userAnswer: selected,
         }
 
-        data.postAnswer(id, body)
+        data.getAnswer(id, body)
             .then((response) => {
                 this.setState({
                     answer: {
