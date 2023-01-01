@@ -2,6 +2,7 @@ import React from 'react'
 import {Hand, HandDetail} from '../hand/hand'
 import {Answer, AnswerDetail} from '../answer/answer'
 import {NextButton} from "../nextButton/nextButton";
+import {AcceptLink} from "../acceptLink/acceptLink";
 import {PaiDetail} from "../pai/pai";
 import data from "../../data/infrastructure/data";
 import {IAnswerRequest} from "../../data/infrastructure/data";
@@ -77,8 +78,9 @@ class Question extends React.Component<{}, QuestionState> {
     }
 
     render() {
-        const answer = this.state.answer === undefined ? <></> : <Answer detail={this.state.answer}/>
-        const button = this.state.answer === undefined ? <></> : <NextButton onClickNextButton={() => this.nextQuestion()}/>
+        const answer      = this.state.answer === undefined ? <></> : <Answer detail={this.state.answer}/>
+        const nextButton  = this.state.answer === undefined ? <></> : <NextButton onClickNextButton={() => this.nextQuestion()}/>
+        const acceptButton = this.state.answer === undefined ? <></> : <AcceptLink paiList={this.state.hand.paiList}/>
 
         return (
             <>
@@ -89,7 +91,8 @@ class Question extends React.Component<{}, QuestionState> {
                     {answer}
                 </div>
                 <div className="button-container">
-                    {button}
+                    {nextButton}
+                    {acceptButton}
                 </div>
             </>
         );
