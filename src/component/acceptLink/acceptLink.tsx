@@ -37,7 +37,7 @@ export const AcceptLink: React.FC<AcceptLinkProps> = props => {
 
     return (
         <button className={"acceptLink"}>
-            <a href={url} target="_blank">受け入れ枚数 ➡️</a>
+            <a href={url} target="_blank" rel="noreferrer">受け入れ枚数 ➡️</a>
         </button>
     );
 }
