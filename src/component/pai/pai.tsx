@@ -38,7 +38,8 @@ export const Pai: React.FC<PaiProps> = props => {
     }
 
     const getPaiImgFileName = (pai: PaiProps) => {
-        return `${pai.detail.index}.gif`;
+        const b = pai.detail.isBonus ? "-b" : ""
+        return `${pai.detail.index}${b}.png`;
     }
 
     const getPaiImgPath = (pai: PaiProps) : string => {
