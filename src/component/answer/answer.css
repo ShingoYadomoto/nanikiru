@@ -1,5 +1,6 @@
 .answer {
   display: flex;
+  font-weight: bold;
 }
 
 .answer img.correctOrNot {
