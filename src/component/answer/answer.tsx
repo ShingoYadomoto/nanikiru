@@ -20,9 +20,14 @@ export const Answer: React.FC<AnswerProps> = props => {
         );
     });
 
+    const resultImageFile = props.detail.isCorrect ? "correct" : "incorrect"
+    const resultImage = `${process.env.PUBLIC_URL}/img/${resultImageFile}.png`;
+
     return (
         <>
-            <span>{props.detail.isCorrect ? "○" : "×"}</span>
+            <span>
+                <img className={"correctOrNot"} src={resultImage} alt="正誤" ></img>
+            </span>
             <span>回答:</span>
             <span><Pai detail={props.detail.userAnswer} onPaiSelected={selected => {}}/></span>
             <span>正解:</span>
