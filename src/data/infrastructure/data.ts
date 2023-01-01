@@ -21,6 +21,7 @@ export interface IAnswerRequest {
 }
 
 export interface IAnswerData {
+    page: number,
     isCorrect: boolean,
     correctAnswer: PaiDetail[],
 }

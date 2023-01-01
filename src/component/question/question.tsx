@@ -64,6 +64,7 @@ class Question extends React.Component<{}, QuestionState> {
             .then((response) => {
                 this.setState({
                     answer: {
+                        page: response.data.page,
                         isCorrect: response.data.isCorrect,
                         userAnswer: selected,
                         correctAnswer: response.data.correctAnswer,
