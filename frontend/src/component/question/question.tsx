@@ -84,8 +84,10 @@ class Question extends React.Component<{}, QuestionState> {
                 <div className="hand-container">
                     <Hand detail={this.state.hand} onPaiSelected={selected => this.handleAnswer(this.state.questionID, selected)}/>
                 </div>
-                <div>
+                <div className="answer-container">
                     {answer}
+                </div>
+                <div className="button-container">
                     {button}
                 </div>
             </>

@@ -1,9 +1,32 @@
 .hand-container {
-  min-height: 50vh;
+  min-height: 30vh;
+  padding-top: 20vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+}
+
+.answer-container {
+  min-height: 10vh;
+  display: flex;
+  justify-content: center;
+  color: white;
+}
+
+.answer-container span {
+  margin-right: 20px;
+}
+
+.answer-container span:last-child {
+  margin-right: 0;
+}
+
+
+.button-container {
+  min-height: 10vh;
+  display: flex;
+  justify-content: center;
 }
