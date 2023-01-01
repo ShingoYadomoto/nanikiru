@@ -4,7 +4,7 @@ import {Answer, AnswerDetail} from '../answer/answer'
 import {NextButton} from "../nextButton/nextButton";
 import {PaiDetail} from "../pai/pai";
 import data from "../../data/infrastructure/data";
-import {IAnswerRequest} from "../../data/infrastructure/schema";
+import {IAnswerRequest} from "../../data/infrastructure/data";
 import './question.css'
 
 export type QuestionID = number
