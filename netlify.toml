@@ -1,6 +1,5 @@
 [build]
-  base = "/"
-  command = "make build"
+  command = "make build && npm run build"
   functions = "/functions"
 
 [build.environment]
