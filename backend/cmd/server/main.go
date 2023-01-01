@@ -4,11 +4,12 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/ShingoYadomoto/nanikiru/backend/handler"
 	"github.com/gorilla/mux"
 )
 
 func main() {
-	h := Handler{}
+	h := handler.Handler{}
 
 	r := mux.NewRouter()
 	r.HandleFunc("/questions", h.CORSMiddleware(h.GetRandomQuestionHandler)).Methods("GET", "OPTIONS")
