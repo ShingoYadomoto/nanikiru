@@ -4,6 +4,7 @@
 
 .hand > .pai {
   cursor: pointer;
+  max-width: 7vw;
 }
 
 .hand > .pai:hover {

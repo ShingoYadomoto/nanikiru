@@ -25,14 +25,16 @@ export const Answer: React.FC<AnswerProps> = props => {
 
     return (
         <>
-            <span>
-                <img className={"correctOrNot"} src={resultImage} alt="正誤" ></img>
-            </span>
-            <span>回答:</span>
-            <span><Pai detail={props.detail.userAnswer} onPaiSelected={selected => {}}/></span>
-            <span>正解:</span>
-            <span>{correctAnswers}</span>
-            <span>P.{props.detail.page}</span>
+            <div className={"answer"}>
+                <span>
+                    <img className={"correctOrNot"} src={resultImage} alt="正誤" ></img>
+                </span>
+                <span>回答:</span>
+                <span><Pai detail={props.detail.userAnswer} onPaiSelected={selected => {}}/></span>
+                <span>正解:</span>
+                <span>{correctAnswers}</span>
+                <span>P.{props.detail.page}</span>
+            </div>
         </>
     );
 }

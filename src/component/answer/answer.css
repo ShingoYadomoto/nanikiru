@@ -1,3 +1,11 @@
-img.correctOrNot {
+.answer {
+  display: flex;
+}
+
+.answer img.correctOrNot {
   width: 90px;
+}
+
+.answer .pai {
+  max-width: 20vw;
 }
