@@ -17,3 +17,12 @@
   box-shadow: none;
   transform: translate(3px, 3px);
 }
+
+.acceptLink a {
+  color: #FAFAFA;
+  text-decoration: none;
+}
+
+.acceptLink a:visited {
+  color: inherit;
+}
