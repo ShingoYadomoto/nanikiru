@@ -76,8 +76,8 @@ class Question extends React.Component<{}, QuestionState> {
     }
 
     render() {
-        const answer = this.state.answer == undefined ? <></> : <Answer detail={this.state.answer}/>
-        const button = this.state.answer == undefined ? <></> : <NextButton onClickNextButton={() => this.nextQuestion()}/>
+        const answer = this.state.answer === undefined ? <></> : <Answer detail={this.state.answer}/>
+        const button = this.state.answer === undefined ? <></> : <NextButton onClickNextButton={() => this.nextQuestion()}/>
 
         return (
             <>
