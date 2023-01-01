@@ -4,8 +4,8 @@ Basic mahjong practice application built on [Netlify](https://app.netlify.com/).
 
 You can study the hand progression with no situation settings.
 
-![correct](https://user-images.githubusercontent.com/29448279/210169824-3f1eff57-7a34-4217-9698-562670bd412e.png)
-![incorrect](https://user-images.githubusercontent.com/29448279/210169821-e4f8a643-8586-4863-86f3-4be6d9726554.png)
+<img src="https://user-images.githubusercontent.com/29448279/210169824-3f1eff57-7a34-4217-9698-562670bd412e.png" style="width: 49%">
+<img src="https://user-images.githubusercontent.com/29448279/210169821-e4f8a643-8586-4863-86f3-4be6d9726554.png" style="width: 49%">
 
 
 [Application](https://nanikiru.netlify.app/)
