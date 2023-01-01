@@ -1,8 +1,7 @@
 import axios from "axios";
 
 export default axios.create({
-    baseURL: "http://localhost:8888/",
-    // baseURL: "https://nanikiru-functions.netlify.app/.netlify/functions/",
+    baseURL: process.env.REACT_APP_BASE_API_ENDPOINT,
     headers: {
         "Content-type": "application/json"
     }
