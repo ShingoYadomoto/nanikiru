@@ -23,8 +23,10 @@ export const Answer: React.FC<AnswerProps> = props => {
     return (
         <>
             <span>{props.detail.isCorrect ? "○" : "×"}</span>
-            <span>回答: <Pai detail={props.detail.userAnswer} onPaiSelected={selected => {}}/></span>
-            <span>正解: {correctAnswers}</span>
+            <span>回答:</span>
+            <span><Pai detail={props.detail.userAnswer} onPaiSelected={selected => {}}/></span>
+            <span>正解:</span>
+            <span>{correctAnswers}</span>
             <span>P.{props.detail.page}</span>
         </>
     );

@@ -14,10 +14,12 @@
   display: flex;
   justify-content: center;
   color: white;
+  align-items: center;
 }
 
 .answer-container span {
   margin-right: 20px;
+  display: flex;
 }
 
 .answer-container span:last-child {

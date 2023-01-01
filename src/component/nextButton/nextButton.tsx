@@ -12,7 +12,7 @@ export const NextButton: React.FC<NextButtonProps> = props => {
 
     return (
         <button className={"nextButton"} onClick={e => onClick()}>
-            次の問題へ
+            {"Next ➡️"}
         </button>
     );
 }
