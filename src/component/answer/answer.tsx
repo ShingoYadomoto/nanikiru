@@ -17,7 +17,7 @@ type AnswerProps = {
 export const Answer: React.FC<AnswerProps> = props => {
     const correctAnswers = props.detail.correctAnswer.map((fc, idx) => {
         return (
-            <Pai detail={fc} onPaiSelected={selected => {}}/>
+            <Pai detail={fc} onPaiSelected={selected => {}} key={idx}/>
         );
     });
 

@@ -1,6 +1,7 @@
 import axios from "./axios";
 import {PaiType} from "../../component/pai/pai";
 import {QuestionID} from "../../component/question/question";
+import {SituationDetail} from "../../component/situation/situation";
 
 type PaiDetail = {
     type: PaiType;
@@ -12,7 +13,7 @@ type PaiDetail = {
 export interface IQuestionData {
     id: QuestionID,
     paiList: PaiDetail[],
-    situation: string,
+    situation?: SituationDetail,
     page: number,
 }
 

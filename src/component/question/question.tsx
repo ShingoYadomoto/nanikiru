@@ -1,6 +1,7 @@
 import React from 'react'
 import {Hand, HandDetail} from '../hand/hand'
 import {Answer, AnswerDetail} from '../answer/answer'
+import {Situation, SituationDetail} from "../situation/situation";
 import {NextButton} from "../nextButton/nextButton";
 import {AcceptLink} from "../acceptLink/acceptLink";
 import {PaiDetail} from "../pai/pai";
@@ -13,6 +14,7 @@ export type QuestionID = number
 type QuestionState = {
     excludeID: QuestionID[]
     questionID: QuestionID;
+    situation?: SituationDetail;
     hand: HandDetail;
     answer?: AnswerDetail;
 }
@@ -37,6 +39,11 @@ class Question extends React.Component<{}, QuestionState> {
     }
 
     nextQuestion() {
+        this.setState({
+            situation: undefined,
+            hand: {paiList: []},
+        });
+
         data.getQuestion(this.state.excludeID)
             .then((response) => {
                 const excludeID = this.state.excludeID
@@ -46,6 +53,7 @@ class Question extends React.Component<{}, QuestionState> {
                     excludeID: excludeID,
                     questionID: response.data.id,
                     answer: undefined,
+                    situation: response.data.situation,
                     hand: {
                         paiList: response.data.paiList
                     },
@@ -79,12 +87,17 @@ class Question extends React.Component<{}, QuestionState> {
     }
 
     render() {
-        const answer      = this.state.answer === undefined ? <></> : <Answer detail={this.state.answer}/>
-        const nextButton  = this.state.answer === undefined ? <></> : <NextButton onClickNextButton={() => this.nextQuestion()}/>
+        const situation = this.state.situation === undefined ? <></> : <Situation detail={this.state.situation}/>
+
+        const answer       = this.state.answer === undefined ? <></> : <Answer detail={this.state.answer}/>
+        const nextButton   = this.state.answer === undefined ? <></> : <NextButton onClickNextButton={() => this.nextQuestion()}/>
         const acceptButton = this.state.answer === undefined ? <></> : <AcceptLink paiList={this.state.hand.paiList}/>
 
         return (
             <>
+                <div className="situation-container">
+                    {situation}
+                </div>
                 <div className="hand-container">
                     <Hand detail={this.state.hand} onPaiSelected={selected => this.handleAnswer(this.state.questionID, selected)}/>
                 </div>

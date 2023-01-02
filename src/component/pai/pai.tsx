@@ -22,11 +22,11 @@ export type PaiProps = {
 export const Pai: React.FC<PaiProps> = props => {
     const getPaiImgTypeDir = (pai: PaiProps) => {
         switch(pai.detail.type){
-            case "m": return "manzu";
-            case "p": return "pinzu";
-            case "s": return "sozu";
-            case "z": return "zi";
-            default:  return "";
+            case PaiType.Manzu: return "manzu";
+            case PaiType.Pinzu: return "pinzu";
+            case PaiType.Sozu:  return "sozu";
+            case PaiType.Zi:    return "zi";
+            default:            return "";
         }
     }
 
