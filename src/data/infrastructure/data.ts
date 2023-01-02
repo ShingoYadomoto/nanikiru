@@ -24,6 +24,7 @@ export interface IAnswerData {
     page: number,
     isCorrect: boolean,
     correctAnswer: PaiDetail[],
+    comment: string,
 }
 
 const getQuestion = (excludeID: QuestionID[]) => {

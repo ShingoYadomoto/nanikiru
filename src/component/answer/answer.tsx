@@ -7,6 +7,7 @@ export type AnswerDetail = {
     isCorrect: boolean;
     userAnswer: PaiDetail;
     correctAnswer: PaiDetail[];
+    comment: string;
 }
 
 type AnswerProps = {
@@ -21,7 +22,8 @@ export const Answer: React.FC<AnswerProps> = props => {
     });
 
     const resultImageFile = props.detail.isCorrect ? "correct" : "incorrect"
-    const resultImage = `${process.env.PUBLIC_URL}/img/${resultImageFile}.png`;
+    const resultImage     = `${process.env.PUBLIC_URL}/img/${resultImageFile}.png`;
+    const commentaryImage = `${process.env.PUBLIC_URL}/img/check.png`;
 
     return (
         <>
@@ -33,7 +35,10 @@ export const Answer: React.FC<AnswerProps> = props => {
                 <span><Pai detail={props.detail.userAnswer} onPaiSelected={selected => {}}/></span>
                 <span>正解:</span>
                 <span>{correctAnswers}</span>
-                <span>P.{props.detail.page}</span>
+            </div>
+            <div className={"commentary"}>
+                <img className={"commentaryImg"} src={commentaryImage} alt="check" ></img>
+                P.{props.detail.page} {props.detail.comment}
             </div>
         </>
     );

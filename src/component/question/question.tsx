@@ -69,6 +69,7 @@ class Question extends React.Component<{}, QuestionState> {
                         isCorrect: response.data.isCorrect,
                         userAnswer: selected,
                         correctAnswer: response.data.correctAnswer,
+                        comment: response.data.comment,
                     },
                 });
             })
@@ -91,8 +92,8 @@ class Question extends React.Component<{}, QuestionState> {
                     {answer}
                 </div>
                 <div className="button-container">
-                    {nextButton}
                     {acceptButton}
+                    {nextButton}
                 </div>
             </>
         );
