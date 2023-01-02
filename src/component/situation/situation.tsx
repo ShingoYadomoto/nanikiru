@@ -67,6 +67,10 @@ export const Situation: React.FC<SituationProps> = props => {
     }
 
     const getBonus = (doraList: PaiDetail[]) => {
+        if (doraList.length === 0) {
+            return
+        }
+
         const images = doraList.map((fc, idx) => {
             return (
                 <Pai detail={fc} onPaiSelected={selected => {}} key={idx}/>
