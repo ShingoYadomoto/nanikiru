@@ -66,7 +66,20 @@ export const Situation: React.FC<SituationProps> = props => {
         return getFieldText(situation) + getOtherText(situation.other)
     }
 
+    const getBonus = (doraList: PaiDetail[]) => {
+        const images = doraList.map((fc, idx) => {
+            return (
+                <Pai detail={fc} onPaiSelected={selected => {}} key={idx}/>
+            );
+        });
+
+        return <>ドラ: {images}</>
+    }
+
     return (
-        <div className={"situation"}>{getSituationText(props.detail)}</div>
+        <div className={"situation"}>
+            <span>{getSituationText(props.detail)}</span>
+            <span>{getBonus(props.detail.bonus)}</span>
+        </div>
     );
 }
