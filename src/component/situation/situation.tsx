@@ -1,5 +1,5 @@
 import React from 'react'
-import {Pai, PaiDetail, PaiProps} from '../pai/pai';
+import {Pai, PaiDetail} from '../pai/pai';
 import './situation.css'
 
 enum FanType {
@@ -59,7 +59,7 @@ export const Situation: React.FC<SituationProps> = props => {
     }
 
     const getOtherText = (other: string) => {
-        return other != "" ? "（" + other + "）" : ""
+        return other !== "" ? "（" + other + "）" : ""
     }
 
     const getSituationText = (situation: SituationDetail) => {
