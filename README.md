@@ -1,5 +1,7 @@
 # nanikiru
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/fda2474a-66ce-4bd8-90b2-70e29a19d8d1/deploy-status)](https://app.netlify.com/sites/nanikiru/deploys)
+
 Basic mahjong practice application built on [Netlify](https://app.netlify.com/).
 
 You can study the hand progression with no situation settings.
